@@ -1,7 +1,10 @@
 package edu.miu.student.bacha.studentmanagementapp;
 
 import edu.miu.student.bacha.studentmanagementapp.model.Student;
+import edu.miu.student.bacha.studentmanagementapp.model.Transcript;
 import edu.miu.student.bacha.studentmanagementapp.repository.StudentRepository;
+import edu.miu.student.bacha.studentmanagementapp.repository.TranscriptRepository;
+import lombok.Builder;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,17 +20,16 @@ public class StudentManagementAppApplication {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(StudentRepository studentRepository) {
+    public CommandLineRunner commandLineRunner(StudentRepository studentRepository, TranscriptRepository transcriptRepository) {
         return args -> {
-            System.out.println("hello from clr");
-            Student student = new Student(1L, "000-61-0001", "Anna", "Lynn", "Smith", 3.45, LocalDate.of(2019, 5, 24));
-            saveStudent(student, studentRepository);
+            Transcript transcript = new Transcript(null, "Trc pt1", "BS Computer Science", null);
+            transcriptRepository.save(transcript);
+            System.out.println(transcript + " has been successfully saved!");
+            Student student = new Student(null, "miu100", "Anna", null, "Smith", 3.45, LocalDate.of(2019, 5, 24), transcript);
+            studentRepository.save(student);
+            System.out.println(student + " has been successfully saved!");
         };
     }
 
-    private void saveStudent(Student student, StudentRepository studentRepository) {
-        studentRepository.save(student);
-        System.out.println("Student saved successfully: " + student);
-    }
 
 }
