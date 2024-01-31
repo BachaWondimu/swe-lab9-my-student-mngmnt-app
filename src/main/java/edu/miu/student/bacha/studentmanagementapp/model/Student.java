@@ -25,7 +25,6 @@ public class Student {
     String studentNumber; //required
     @NotBlank(message = "Name cannot be empty")
     String firstName; //required
-
     String middleName;
     @NotBlank(message = "Name cannot be empty")
     String lastName;//required
@@ -35,4 +34,6 @@ public class Student {
     LocalDate dateOfEnrollment;
     @OneToOne(cascade = CascadeType.ALL)
     private Transcript transcript;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Classroom classroom;
 }
